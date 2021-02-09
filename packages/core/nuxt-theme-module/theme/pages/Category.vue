@@ -350,7 +350,7 @@ import {
   SfProperty
 } from '@storefront-ui/vue';
 import { ref, computed, onMounted } from '@vue/composition-api';
-import { useCart, useWishlist, productGetters, useFacet, facetGetters, useUser } from '<%= options.generate.replace.composables %>';
+import { useCart, useWishlist, productGetters, useFacet, facetGetters } from '<%= options.generate.replace.composables %>';
 import { useUiHelpers, useUiState } from '~/composables';
 import sendNotification from '~/assets/notifications';
 import { onSSR } from '@vue-storefront/core';
@@ -363,7 +363,6 @@ export default {
   setup(props, context) {
     const th = useUiHelpers();
     const uiState = useUiState();
-    const { isAuthenticated } = useUser();
     const { addItem: addItemToCart, isInCart, error } = useCart();
     const { addItem: addItemToWishlist } = useWishlist();
     const { result, search, loading } = useFacet();
@@ -437,7 +436,7 @@ export default {
       sendNotification.cart.addItem({
         productName: product._name,
         error: error.value.addItem ? error.value.addItem.message : false,
-        onClick: () => $router.push(`/checkout/${isAuthenticated.value ? 'shipping' : 'personal-details'}`),
+        onClick: () => $router.push('/checkout/personal-details'),
         $i18n
       });
     };

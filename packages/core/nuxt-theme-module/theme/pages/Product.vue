@@ -184,7 +184,7 @@ import {
 import InstagramFeed from '~/components/InstagramFeed.vue';
 import RelatedProducts from '~/components/RelatedProducts.vue';
 import { ref, computed } from '@vue/composition-api';
-import { useProduct, useCart, useUser, productGetters, useReview, reviewGetters } from '<%= options.generate.replace.composables %>';
+import { useProduct, useCart, productGetters, useReview, reviewGetters } from '<%= options.generate.replace.composables %>';
 import sendNotification from '~/assets/notifications';
 import { onSSR } from '@vue-storefront/core';
 import MobileStoreBanner from '~/components/MobileStoreBanner.vue';
@@ -199,7 +199,6 @@ export default {
     const { products, search } = useProduct('products');
     const { products: relatedProducts, search: searchRelatedProducts, loading: relatedLoading } = useProduct('relatedProducts');
     const { addItem, loading, error } = useCart();
-    const { isAuthenticated } = useUser();
     const { $router, $i18n } = context.root;
     const { reviews: productReviews, search: searchReviews } = useReview('productReviews');
 
@@ -239,7 +238,7 @@ export default {
       sendNotification.cart.addItem({
         productName: product._name,
         error: error.value.addItem ? error.value.addItem.message : false,
-        onClick: () => $router.push(`/checkout/${isAuthenticated.value ? 'shipping' : 'personal-details'}`),
+        onClick: () => $router.push('/checkout/personal-details'),
         $i18n
       });
     };
